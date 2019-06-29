@@ -77,7 +77,7 @@ bool ElunaUtil::WorldObjectInRangeCheck::operator()(WorldObject* u)
             target = go->GetOwner();
     if (target)
     {
-#ifdef CMANGOS
+#if defined(CMANGOS) || defined(VMANGOS)
         if (i_dead && (i_dead == 1) != target->isAlive())
             return false;
 #else
