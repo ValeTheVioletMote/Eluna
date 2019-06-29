@@ -108,7 +108,7 @@ void Eluna::OnPacketReceiveAny(Player* player, WorldPacket& packet, bool& result
             if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
             {
                 #ifdef VMANGOS
-                packet = std::move(*data)
+                packet = std::move(*data);
                 #else
                 packet = *data;
                 #endif
@@ -138,7 +138,7 @@ void Eluna::OnPacketReceiveOne(Player* player, WorldPacket& packet, bool& result
             if (WorldPacket* data = CHECKOBJ<WorldPacket>(L, r + 1, false))
             {
                 #ifdef VMANGOS
-                packet = std::move(*data)
+                packet = std::move(*data);
                 #else
                 packet = *data;
                 #endif
