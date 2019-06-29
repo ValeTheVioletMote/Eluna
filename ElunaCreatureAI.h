@@ -201,7 +201,7 @@ struct ElunaCreatureAI : ScriptedAI
             ScriptedAI::CorpseRemoved(respawnDelay);
     }
 
-#if !defined TRINITY && !AZEROTHCORE
+#if !defined TRINITY && !AZEROTHCORE && !VMANGOS
     // Enables use of MoveInLineOfSight
     bool IsVisible(Unit* who) const override
     {
