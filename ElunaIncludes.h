@@ -90,6 +90,11 @@ typedef Opcodes                 OpcodesList;
 #define CORE_VERSION            REVISION_NR
 #endif
 
+#ifdef VMANGOS
+#define CORE_NAME               "vMaNGOS"
+#define CORE_VERSION            REVISION_HASH
+#endif
+
 #ifdef CMANGOS
 #define CORE_NAME               "cMaNGOS"
 #define CORE_VERSION            REVISION_DATE " " REVISION_TIME
@@ -142,8 +147,9 @@ typedef Opcodes                 OpcodesList;
 #define TOTAL_LOCALES           MAX_LOCALE
 #define TARGETICONCOUNT         TARGET_ICON_COUNT
 #define MAX_TALENT_SPECS        MAX_TALENT_SPEC_COUNT
+#ifndef VMANGOS
 #define TEAM_NEUTRAL            TEAM_INDEX_NEUTRAL
-
+#endif
 #if defined(TBC) || defined(WOTLK) || defined(CATA)
 #define PLAYER_FIELD_LIFETIME_HONORABLE_KILLS   PLAYER_FIELD_LIFETIME_HONORBALE_KILLS
 #endif
