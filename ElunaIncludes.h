@@ -93,6 +93,7 @@ typedef Opcodes                 OpcodesList;
 #ifdef VMANGOS
 #define CORE_NAME               "vMaNGOS"
 #define CORE_VERSION            REVISION_HASH
+#define DEFAULT_LOCALE          LOCALE_enUS
 #endif
 
 #ifdef CMANGOS
