@@ -1612,8 +1612,10 @@ namespace LuaGlobalFunctions
                 }
 
                 GameObject* pGameObj = new GameObject;
-#if (defined(TBC) || defined(CLASSIC))
+#if ((defined(TBC) || defined(CLASSIC)) && !defined VMANGOS)
                 if (!pGameObj->Create(db_lowGUID, gInfo->id, map, x, y, z, o))
+#elif defined VMANGOS
+                if (!pGameObj->Create(db_lowGUID, gInfo->id, map, x, y, z, o, 0.0f, 0.0f, 0.0f, 0.0f, 0, GO_STATE_READY)) // TODO: allow vMangos Eluna Lua func to provide rotation, animprogress, & state
 #else
                 if (!pGameObj->Create(db_lowGUID, gInfo->id, map, phase, x, y, z, o))
 #endif
@@ -1655,8 +1657,10 @@ namespace LuaGlobalFunctions
             {
                 GameObject* pGameObj = new GameObject;
 
-#if (defined(TBC) || defined(CLASSIC))
+#if ((defined(TBC) || defined(CLASSIC)) && !defined VMANGOS)
                 if (!pGameObj->Create(map->GenerateLocalLowGuid(HIGHGUID_GAMEOBJECT), entry, map, x, y, z, o))
+#elif defined VMANGOS
+                if (!pGameObj->Create(db_lowGUID, gInfo->id, map, x, y, z, o, 0.0f, 0.0f, 0.0f, 0.0f, 0, GO_STATE_READY)) // TODO: allow vMangos Eluna Lua func to provide rotation, animprogress, & state
 #else
                 if (!pGameObj->Create(map->GenerateLocalLowGuid(HIGHGUID_GAMEOBJECT), entry, map, phase, x, y, z, o))
 #endif
@@ -1866,6 +1870,9 @@ namespace LuaGlobalFunctions
             return 0;
         eObjectMgr->AddVendorItem(entry, item, maxcount, incrtime, extendedcost);
 #endif
+#elif defined VMANGOS
+        if (!eObjectMgr->IsVendorItemValid(false, "npc_vendor", entry, item, maxcount, incrtime))
+            return 0;
 #else
         if (!eObjectMgr->IsVendorItemValid(false, "npc_vendor", entry, item, maxcount, incrtime, extendedcost, 0))
             return 0;
