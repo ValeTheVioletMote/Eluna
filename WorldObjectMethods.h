@@ -1170,8 +1170,13 @@ namespace LuaWorldObject
     {
         uint32 soundId = Eluna::CHECKVAL<uint32>(L, 2);
         Player* player = Eluna::CHECKOBJ<Player>(L, 3, false);
+        #ifndef VMANGOS
         if (!sSoundEntriesStore.LookupEntry(soundId))
             return 0;
+        #else
+        if(!GetSoundEntry(soundId))
+            return 0;
+        #endif
 
         if (player)
             obj->PlayDirectSound(soundId, player);
@@ -1196,8 +1201,13 @@ namespace LuaWorldObject
     {
         uint32 soundId = Eluna::CHECKVAL<uint32>(L, 2);
         Player* player = Eluna::CHECKOBJ<Player>(L, 3, false);
+        #ifndef VMANGOS
         if (!sSoundEntriesStore.LookupEntry(soundId))
             return 0;
+        #else
+        if(!GetSoundEntry(soundId))
+            return 0;
+        #endif
 
         if (player)
             obj->PlayDistanceSound(soundId, player);
