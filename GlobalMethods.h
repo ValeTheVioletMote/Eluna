@@ -1878,6 +1878,8 @@ namespace LuaGlobalFunctions
             return 0;
 #ifndef CLASSIC
         eObjectMgr->AddVendorItem(entry, item, maxcount, incrtime, extendedcost);
+#elif defined VMANGOS
+        eObjectMgr->AddVendorItem(entry, item, maxcount, incrtime, 0); // TODO: Allow vMangos Eluna to provide item flags.
 #else
         eObjectMgr->AddVendorItem(entry, item, maxcount, incrtime);
 #endif
