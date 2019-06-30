@@ -992,7 +992,7 @@ namespace LuaUnit
     {
 #ifdef TRINITY
         Eluna::Push(L, unit->GetPowerType());
-#elif AZEROTHCORE
+#elif AZEROTHCORE || VMANGOS
         Eluna::Push(L, unit->getPowerType());
 #else
         Eluna::Push(L, unit->GetPowerType());
