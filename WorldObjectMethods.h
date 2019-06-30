@@ -779,7 +779,7 @@ namespace LuaWorldObject
                 type = TEMPSUMMON_TIMED_DESPAWN;
                 break;
             case 4:
-#if defined TRINITY || AZEROTHCORE
+#if defined TRINITY || AZEROTHCORE || VMANGOS
                 type = TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT;
 #else
                 type = TEMPSUMMON_TIMED_OOC_DESPAWN;
