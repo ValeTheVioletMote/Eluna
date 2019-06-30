@@ -477,6 +477,8 @@ namespace LuaGlobalFunctions
 
 #if defined TRINITY || AZEROTHCORE
         AreaTableEntry const* areaEntry = sAreaTableStore.LookupEntry(areaOrZoneId);
+#elif defined VMANGOS
+        const auto* areaEntry = AreaEntry::GetById(areaOrZoneId);
 #else
         AreaTableEntry const* areaEntry = GetAreaEntryByAreaID(areaOrZoneId);
 #endif
@@ -1571,9 +1573,9 @@ namespace LuaGlobalFunctions
                         return 1;
                     }
                 }
-
+                #ifndef VMANGOS
                 pCreature->SetRespawnCoord(pos);
-
+                #endif
                 // Active state set before added to map
                 pCreature->SetActiveObjectState(false);
 
