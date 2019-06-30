@@ -46,7 +46,11 @@ namespace LuaUnit
      */
     int IsStandState(lua_State* L, Unit* unit)
     {
+        #ifdef VMANGOS
+        Eluna::Push(L, unit->IsStandingUp());
+        #else
         Eluna::Push(L, unit->IsStandState());
+        #endif
         return 1;
     }
 
