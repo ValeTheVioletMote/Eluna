@@ -300,8 +300,11 @@ namespace LuaPlayer
     int GetHonorStoredKills(lua_State* L, Player* player)
     {
         bool honorable = Eluna::CHECKVAL<bool>(L, 2, true);
-
+        #ifdef VMANGOS
+        Eluna::Push(L, player->GetHonorMgr()->GetStoredHK());
+        #else
         Eluna::Push(L, player->GetHonorStoredKills(honorable));
+        #endif
         return 1;
     }
 
@@ -312,7 +315,11 @@ namespace LuaPlayer
      */
     int GetRankPoints(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        Eluna::Push(L, player->GetHonorMgr()->GetRankPoints());
+        #else
         Eluna::Push(L, player->GetRankPoints());
+        #endif
         return 1;
     }
 
@@ -323,7 +330,11 @@ namespace LuaPlayer
      */
     int GetHonorLastWeekStandingPos(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        Eluna::Push(L, player->GetHonorMgr()->GetStanding(); // TODO: Probably not exactly what we need. Not week-based(?)
+        #else
         Eluna::Push(L, player->GetHonorLastWeekStandingPos());
+        #endif
         return 1;
     }
 #endif
