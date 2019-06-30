@@ -1700,7 +1700,7 @@ namespace LuaUnit
 
 #ifdef TRINITY
         unit->SetPowerType((Powers)type);
-#elif AZEROTHCORE
+#elif AZEROTHCORE || VMANGOS
         unit->setPowerType((Powers)type);
 #else
         unit->SetPowerType((Powers)type);
@@ -1796,7 +1796,7 @@ namespace LuaUnit
     int SetWaterWalk(lua_State* L, Unit* unit)
     {
         bool enable = Eluna::CHECKVAL<bool>(L, 2, true);
-#if defined TRINITY || AZEROTHCORE
+#if defined TRINITY || AZEROTHCORE || VMANGOS
         unit->SetWaterWalking(enable);
 #else
         unit->SetWaterWalk(enable);
@@ -1908,6 +1908,8 @@ namespace LuaUnit
         bool apply = Eluna::CHECKVAL<bool>(L, 2, true);
 #if defined TRINITY || AZEROTHCORE
         unit->SetControlled(apply, UNIT_STATE_ROOT);
+#elif defined VMANGOS
+        unit->SetRooted(apply);
 #else
         unit->SetRoot(apply);
 #endif
@@ -1967,7 +1969,7 @@ namespace LuaUnit
     {
 #ifdef TRINITY
         unit->GetThreatManager().ClearAllThreat();
-#elif AZEROTHCORE
+#elif AZEROTHCORE || VMANGOS
         unit->getThreatManager().clearReferences();
 #else
         unit->GetThreatManager().clearReferences();
@@ -2156,6 +2158,8 @@ namespace LuaUnit
         unit->GetPosition(x, y, z);
 #if defined TRINITY || AZEROTHCORE
         unit->GetMotionMaster()->MoveRandom(radius);
+#elif defined VMANGOS
+        unit->GetMotionMaster()->MoveRandom(true, radius); // TODO: allow vMangos Eluna to set "use_current_position" instead of magic 'true'
 #else
         unit->GetMotionMaster()->MoveRandomAroundPoint(x, y, z, radius);
 #endif
@@ -2389,6 +2393,9 @@ namespace LuaUnit
 #if defined TRINITY || AZEROTHCORE
         SpellInfo const* spellEntry = sSpellMgr->GetSpellInfo(spell);
 #endif
+#ifdef VMANGOS
+        SpellEntry const* spellEntry = sSpellMgr.GetSpellEntry(spell);
+#endif
         if (!spellEntry)
             return 0;
 
@@ -2560,11 +2567,16 @@ namespace LuaUnit
 #ifdef AZEROTHCORE
         SpellInfo const* spellEntry = sSpellMgr->GetSpellInfo(spell);
 #endif
+#ifdef VMANGOS
+        SpellEntry const* spellEntry = sSpellMgr.GetSpellEntry(spell);
+#endif
         if (!spellEntry)
             return 1;
 
 #if defined TRINITY || AZEROTHCORE
         Eluna::Push(L, unit->AddAura(spell, target));
+#elif defined VMANGOS
+        Eluna::Push(L, unit->AddAura(spell, 0, target)); // TODO: 0 is magic number for "addAuraFlags"
 #else
         if (!IsSpellAppliesAura(spellEntry) && !IsSpellHaveEffect(spellEntry, SPELL_EFFECT_PERSISTENT_AREA_AURA))
             return 1;
@@ -2701,7 +2713,7 @@ namespace LuaUnit
         // flat melee damage without resistence/etc reduction
         if (school == MAX_SPELL_SCHOOL)
         {
-#if defined TRINITY || AZEROTHCORE
+#if defined TRINITY || AZEROTHCORE || VMANGOS
             Unit::DealDamage(unit, target, damage, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, durabilityloss);
             unit->SendAttackStateUpdate(HITINFO_AFFECTS_VICTIM, target, 1, SPELL_SCHOOL_MASK_NORMAL, damage, 0, 0, VICTIMSTATE_HIT, 0);
 #else
@@ -2799,7 +2811,11 @@ namespace LuaUnit
         if (!spell)
         {
             uint32 absorb = 0;
+            #ifdef VMANGOS
+            int32 resist = 0;
+            #else
             uint32 resist = 0;
+            #endif
             target->CalculateDamageAbsorbAndResist(unit, schoolmask, SPELL_DIRECT_DAMAGE, damage, &absorb, &resist);
 
             if (damage <= absorb + resist)
@@ -2850,6 +2866,9 @@ namespace LuaUnit
         SpellEntry const* spellEntry = GetSpellStore()->LookupEntry<SpellEntry>(spell);
 #else
         SpellEntry const* spellEntry = sSpellStore.LookupEntry(spell);
+#endif
+#ifdef VMANGOS
+        SpellEntry const* spellEntry = sSpellMgr.GetSpellEntry(spell);
 #endif
         if (spellEntry)
             unit->DealHeal(target, amount, spellEntry, critical);
@@ -2918,7 +2937,11 @@ namespace LuaUnit
         SpellEntry const* spellEntry = GetSpellStore()->LookupEntry<SpellEntry>(spell);
         unit->AddThreat(victim, threat, false, spellEntry ? spellEntry->SchoolMask : SPELL_SCHOOL_MASK_NONE, spellEntry);
 #else
+#ifdef VMANGOS
+        SpellEntry const* spellEntry = sSpellMgr.GetSpellEntry(spell);
+#else
         SpellEntry const* spellEntry = sSpellStore.LookupEntry(spell);
+#endif
 #ifdef CLASSIC
         unit->AddThreat(victim, threat, false, spellEntry ? GetSchoolMask(spellEntry->School) : SPELL_SCHOOL_MASK_NONE, spellEntry);
 #else
