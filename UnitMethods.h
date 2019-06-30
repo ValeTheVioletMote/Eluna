@@ -1275,7 +1275,11 @@ namespace LuaUnit
         unit->VisitNearbyObject(range, searcher);
 #else
         MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck checker(unit, range);
+        #ifdef VMANGOS
+        MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(unit, list, checker);
+        #else
         MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(list, checker);
+        #endif
         Cell::VisitGridObjects(unit, searcher, range);
 #endif
         ElunaUtil::ObjectGUIDCheck guidCheck(unit->GET_GUID());
