@@ -139,7 +139,7 @@ namespace LuaUnit
      */
     int IsGuildMaster(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isGuildMaster());
 #else
         Eluna::Push(L, unit->IsGuildMaster());
