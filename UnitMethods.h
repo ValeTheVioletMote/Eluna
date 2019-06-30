@@ -1508,7 +1508,7 @@ namespace LuaUnit
         (void)forced; // ensure that the variable is referenced in order to pass compiler checks
         if (type >= MAX_MOVE_TYPE)
             return luaL_argerror(L, 2, "valid UnitMoveType expected");
-#if defined TRINITY || AZEROTHCORE
+#if defined TRINITY || AZEROTHCORE || VMANGOS
         unit->SetSpeedRate((UnitMoveType)type, rate);
 #else
         unit->SetSpeedRate((UnitMoveType)type, rate, forced);
