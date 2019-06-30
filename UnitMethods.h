@@ -791,8 +791,11 @@ namespace LuaUnit
         uint32 type = Eluna::CHECKVAL<uint32>(L, 2);
         if (type >= CURRENT_MAX_SPELL)
             return luaL_argerror(L, 2, "valid CurrentSpellTypes expected");
-
+        #ifdef VMANGOS
+        Eluna::Push(L, unit->GetCurrentSpell((CurrentSpellTypes)type));
+        #else
         Eluna::Push(L, unit->GetCurrentSpell(type));
+        #endif
         return 1;
     }
     
