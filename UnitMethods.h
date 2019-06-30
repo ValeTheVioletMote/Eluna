@@ -154,7 +154,7 @@ namespace LuaUnit
      */
     int IsInnkeeper(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isInnkeeper());
 #else
         Eluna::Push(L, unit->IsInnkeeper());
@@ -169,7 +169,7 @@ namespace LuaUnit
      */
     int IsTrainer(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isTrainer());
 #else
         Eluna::Push(L, unit->IsTrainer());
@@ -184,7 +184,7 @@ namespace LuaUnit
      */
     int IsGossip(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isGossip());
 #else
         Eluna::Push(L, unit->IsGossip());
@@ -199,7 +199,7 @@ namespace LuaUnit
      */
     int IsTaxi(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isTaxi());
 #else
         Eluna::Push(L, unit->IsTaxi());
@@ -214,7 +214,7 @@ namespace LuaUnit
      */
     int IsSpiritHealer(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isSpiritHealer());
 #else
         Eluna::Push(L, unit->IsSpiritHealer());
@@ -229,7 +229,7 @@ namespace LuaUnit
      */
     int IsSpiritGuide(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isSpiritGuide());
 #else
         Eluna::Push(L, unit->IsSpiritGuide());
@@ -244,7 +244,7 @@ namespace LuaUnit
      */
     int IsTabardDesigner(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isTabardDesigner());
 #else
         Eluna::Push(L, unit->IsTabardDesigner());
@@ -259,7 +259,7 @@ namespace LuaUnit
      */
     int IsServiceProvider(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isServiceProvider());
 #else
         Eluna::Push(L, unit->IsServiceProvider());
@@ -274,7 +274,7 @@ namespace LuaUnit
      */
     int IsSpiritService(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isSpiritService());
 #else
         Eluna::Push(L, unit->IsSpiritService());
@@ -289,7 +289,7 @@ namespace LuaUnit
      */
     int IsAlive(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isAlive());
 #else
         Eluna::Push(L, unit->IsAlive());
@@ -334,7 +334,7 @@ namespace LuaUnit
      */
     int IsBanker(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isBanker());
 #else
         Eluna::Push(L, unit->IsBanker());
@@ -349,7 +349,7 @@ namespace LuaUnit
      */
     int IsVendor(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isVendor());
 #else
         Eluna::Push(L, unit->IsVendor());
@@ -364,7 +364,7 @@ namespace LuaUnit
      */
     int IsBattleMaster(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isBattleMaster());
 #else
         Eluna::Push(L, unit->IsBattleMaster());
@@ -379,7 +379,7 @@ namespace LuaUnit
      */
     int IsCharmed(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isCharmed());
 #else
         Eluna::Push(L, unit->IsCharmed());
@@ -394,7 +394,7 @@ namespace LuaUnit
      */
     int IsArmorer(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isArmorer());
 #else
         Eluna::Push(L, unit->IsArmorer());
