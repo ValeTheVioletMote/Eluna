@@ -448,7 +448,7 @@ namespace LuaUnit
      */
     int IsInCombat(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isInCombat());
 #else
         Eluna::Push(L, unit->IsInCombat());
@@ -496,7 +496,7 @@ namespace LuaUnit
      */
     int IsQuestGiver(lua_State* L, Unit* unit)
     {
-#ifdef CMANGOS
+#if defined CMANGOS || defined VMANGOS
         Eluna::Push(L, unit->isQuestGiver());
 #else
         Eluna::Push(L, unit->IsQuestGiver());
