@@ -2348,7 +2348,11 @@ namespace LuaGlobalFunctions
             nodeEntry->z = entry.z;
             nodeEntry->MountCreatureID[0] = mountH;
             nodeEntry->MountCreatureID[1] = mountA;
+            #ifdef VMANGOS
+            sTaxiPathNodeStore.SetEntry(nodeId++, nodeEntry);
+            #else
             sTaxiNodesStore.SetEntry(nodeId++, nodeEntry);
+            #endif
 #ifndef AZEROTHCORE
             sTaxiPathNodesByPath[pathId].set(index++, new TaxiPathNodeEntry(entry));
 #else
