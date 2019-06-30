@@ -863,7 +863,7 @@ namespace LuaUnit
 #ifdef TRINITY
         if (powerType == -1)
             return unit->GetPowerType();
-#elif AZEROTHCORE
+#elif AZEROTHCORE || VMANGOS
         if (powerType == -1)
             return unit->getPowerType();
 #else
