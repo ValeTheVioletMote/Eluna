@@ -251,6 +251,7 @@ namespace LuaPlayer
         return 1;
     }
 
+#ifndef VMANGOS
     /**
      * Returns 'true' if the [Player] has permission to uninvite others from the current group, 'false' otherwise.
      *
@@ -261,6 +262,20 @@ namespace LuaPlayer
         Eluna::Push(L, player->CanUninviteFromGroup() == ERR_PARTY_RESULT_OK);
         return 1;
     }
+#else
+    /**
+     * Returns 'true' if the [Player] has permission to uninvite another player from the current group, 'false' otherwise.
+     *
+     * @param uint64 guid = playerguid : guid of the target player
+     * @return bool canUninviteFromGroup
+     */
+    int CanUninviteFromGroup(lua_State* L, Player* player)
+    {
+        uint64 guid = Eluna::CHECKVAL<uint64>(L, 2, player->GET_GUID());
+        Eluna::Push(L, player->CanUninviteFromGroup(ObjectGuid(guid)) == ERR_PARTY_RESULT_OK);
+        return 1;
+    }
+#endif
 
 #ifndef CLASSIC
     /**
