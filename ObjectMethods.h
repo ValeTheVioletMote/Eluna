@@ -287,7 +287,11 @@ namespace LuaObject
     {
         uint16 index = Eluna::CHECKVAL<uint16>(L, 2);
         uint32 value = Eluna::CHECKVAL<uint32>(L, 3);
+        #ifdef VMANGOS
+        obj->SetUInt32Value(index, value);
+        #else
         obj->UpdateUInt32Value(index, value);
+        #endif
         return 0;
     }
 
