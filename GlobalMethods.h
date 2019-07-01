@@ -1665,7 +1665,7 @@ namespace LuaGlobalFunctions
 #if ((defined(TBC) || defined(CLASSIC)) && !defined VMANGOS)
                 if (!pGameObj->Create(map->GenerateLocalLowGuid(HIGHGUID_GAMEOBJECT), entry, map, x, y, z, o))
 #elif defined VMANGOS
-                if (!pGameObj->Create(db_lowGUID, gInfo->id, map, x, y, z, o, 0.0f, 0.0f, 0.0f, 0.0f, 0, GO_STATE_READY)) // TODO: allow vMangos Eluna Lua func to provide rotation, animprogress, & state
+                if (!pGameObj->Create(map->GenerateLocalLowGuid(HIGHGUID_GAMEOBJECT), entry, map, x, y, z, o, 0.0f, 0.0f, 0.0f, 0.0f, 0, GO_STATE_READY)) // TODO: allow vMangos Eluna Lua func to provide rotation, animprogress, & state
 #else
                 if (!pGameObj->Create(map->GenerateLocalLowGuid(HIGHGUID_GAMEOBJECT), entry, map, phase, x, y, z, o))
 #endif
