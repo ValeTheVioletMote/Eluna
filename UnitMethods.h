@@ -1276,11 +1276,10 @@ namespace LuaUnit
 #else
         #ifdef VMANGOS
         MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck checker(unit, unit, range);
-        MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(unit, list, checker);
         #else
         MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck checker(unit, range);
-        MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(list, checker);
         #endif
+        MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(list, checker);
         Cell::VisitGridObjects(unit, searcher, range);
 #endif
         ElunaUtil::ObjectGUIDCheck guidCheck(unit->GET_GUID());
