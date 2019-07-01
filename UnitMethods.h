@@ -2874,11 +2874,10 @@ namespace LuaUnit
 #else
 #ifdef CMANGOS
         SpellEntry const* spellEntry = GetSpellStore()->LookupEntry<SpellEntry>(spell);
+#elif  VMANGOS
+        SpellEntry const* spellEntry = sSpellMgr.GetSpellEntry(spell);
 #else
         SpellEntry const* spellEntry = sSpellStore.LookupEntry(spell);
-#endif
-#ifdef VMANGOS
-        SpellEntry const* spellEntry = sSpellMgr.GetSpellEntry(spell);
 #endif
         if (spellEntry)
             unit->DealHeal(target, amount, spellEntry, critical);
