@@ -446,7 +446,7 @@ namespace LuaPlayer
      */
     int IsGM(lua_State* L, Player* player)
     {
-#if defined TRINITY || AZEROTHCORE
+#if defined TRINITY || AZEROTHCORE || VMANGOS
         Eluna::Push(L, player->IsGameMaster());
 #else
         Eluna::Push(L, player->isGameMaster());
@@ -479,7 +479,11 @@ namespace LuaPlayer
      */
     int IsImmuneToDamage(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        Eluna::Push(L, player->IsTotalImmune());
+        #else
         Eluna::Push(L, player->isTotalImmune());
+        #endif
         return 1;
     }
 
@@ -534,7 +538,11 @@ namespace LuaPlayer
      */
     int IsDND(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        Eluna::Push(L, player->IsDND());
+        #else
         Eluna::Push(L, player->isDND());
+        #endif
         return 1;
     }
 
@@ -545,7 +553,11 @@ namespace LuaPlayer
      */
     int IsAFK(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        Eluna::Push(L, player->IsAFK());
+        #else
         Eluna::Push(L, player->isAFK());
+        #endif
         return 1;
     }
 
@@ -603,7 +615,11 @@ namespace LuaPlayer
     {
         Unit* victim = Eluna::CHECKOBJ<Unit>(L, 2);
 
+        #ifdef VMANGOS
+        Eluna::Push(L, player->IsHonorOrXPTarget(victim));
+        #else
         Eluna::Push(L, player->isHonorOrXPTarget(victim));
+        #endif
         return 1;
     }
 
@@ -623,7 +639,11 @@ namespace LuaPlayer
 
     int IsGMVisible(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        Eluna::Push(L, player->IsGMVisible());
+        #else
         Eluna::Push(L, player->isGMVisible());
+        #endif
         return 1;
     }
 
@@ -634,7 +654,7 @@ namespace LuaPlayer
      */
     int IsTaxiCheater(lua_State* L, Player* player)
     {
-#ifdef MANGOS
+#ifdef MANGOS || VMANGOS
         Eluna::Push(L, player->IsTaxiCheater());
 #else
         Eluna::Push(L, player->isTaxiCheater());
@@ -644,7 +664,11 @@ namespace LuaPlayer
 
     int IsGMChat(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        Eluna::Push(L, player->IsGMChat());
+        #else
         Eluna::Push(L, player->isGMChat());
+        #endif
         return 1;
     }
 
@@ -655,7 +679,11 @@ namespace LuaPlayer
      */
     int IsAcceptingWhispers(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
         Eluna::Push(L, player->isAcceptWhispers());
+        #else
+        Eluna::Push(L, player->isAcceptWhispers());
+        #endif
         return 1;
     }
 
@@ -1048,8 +1076,11 @@ namespace LuaPlayer
     int GetSkillTempBonusValue(lua_State* L, Player* player)
     {
         uint32 skill = Eluna::CHECKVAL<uint32>(L, 2);
-
+        #ifdef VMANGOS
+        Eluna::Push(L, player->GetSkillBonusTemporary(skill));
+        #else
         Eluna::Push(L, player->GetSkillTempBonusValue(skill));
+        #endif
         return 1;
     }
 
@@ -1062,8 +1093,11 @@ namespace LuaPlayer
     int GetSkillPermBonusValue(lua_State* L, Player* player)
     {
         uint32 skill = Eluna::CHECKVAL<uint32>(L, 2);
-
+        #ifdef VMANGOS
+        Eluna::Push(L, player->GetSkillBonusPermanent(skill));
+        #else
         Eluna::Push(L, player->GetSkillPermBonusValue(skill));
+        #endif
         return 1;
     }
 
@@ -1076,8 +1110,11 @@ namespace LuaPlayer
     int GetPureSkillValue(lua_State* L, Player* player)
     {
         uint32 skill = Eluna::CHECKVAL<uint32>(L, 2);
-
+        #ifdef VMANGOS
+        Eluna::Push(L, player->GetSkillValuePure(skill));
+        #else
         Eluna::Push(L, player->GetPureSkillValue(skill));
+        #endif
         return 1;
     }
 
@@ -1090,8 +1127,11 @@ namespace LuaPlayer
     int GetBaseSkillValue(lua_State* L, Player* player)
     {
         uint32 skill = Eluna::CHECKVAL<uint32>(L, 2);
-
+        #ifdef VMANGOS
+        Eluna::Push(L, player->GetSkillValueBase(skill));
+        #else
         Eluna::Push(L, player->GetBaseSkillValue(skill));
+        #endif
         return 1;
     }
 
@@ -1118,8 +1158,11 @@ namespace LuaPlayer
     int GetPureMaxSkillValue(lua_State* L, Player* player)
     {
         uint32 skill = Eluna::CHECKVAL<uint32>(L, 2);
-
+        #ifdef VMANGOS
+        Eluna::Push(L, player->GetSkillMaxPure(skill));
+        #else
         Eluna::Push(L, player->GetPureMaxSkillValue(skill));
+        #endif
         return 1;
     }
 
@@ -1133,7 +1176,11 @@ namespace LuaPlayer
     {
         uint32 skill = Eluna::CHECKVAL<uint32>(L, 2);
 
+        #ifdef VMANGOS
+        Eluna::Push(L, player->GetSkillMax(skill));
+        #else
         Eluna::Push(L, player->GetMaxSkillValue(skill));
+        #endif
         return 1;
     }
 
@@ -1304,7 +1351,35 @@ namespace LuaPlayer
         uint32 questId = Eluna::CHECKVAL<uint32>(L, 2);
         int32 entry = Eluna::CHECKVAL<int32>(L, 3);
 
+        #ifdef VMANGOS
+
+        Quest const* qInfo = sObjectMgr.GetQuestTemplate(questId);
+        QuestStatusData& q_status = player->GetQuestStatusData(questId);
+
+        if (qInfo->HasSpecialFlag(QUEST_SPECIAL_FLAG_KILL_OR_CAST))
+        {
+            bool found = false;
+            for (int j = 0; j < QUEST_OBJECTIVES_COUNT; ++j)
+            {
+                if (qInfo->ReqCreatureOrGOId[j] == entry || qInfo->ReqSpell[j] == entry)
+                {
+                    found=true;
+                    Eluna::Push(L, q_status.m_creatureOrGOcount[j]);
+                }
+            }
+            if(!found)
+            {
+                return luaL_argerror(L, 3, "Entry is not valid for this quest.");
+            }
+        }
+        else
+        {
+            return luaL_argerror(L, 2, "Quest is not a kill or cast quest.");
+        }
+        #else
         Eluna::Push(L, player->GetReqKillOrCastCurrentCount(questId, entry));
+        #endif
+
         return 1;
     }
 
