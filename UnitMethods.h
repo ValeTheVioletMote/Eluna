@@ -1274,10 +1274,11 @@ namespace LuaUnit
         Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(unit, list, checker);
         unit->VisitNearbyObject(range, searcher);
 #else
-        MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck checker(unit, range);
         #ifdef VMANGOS
+        MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck checker(unit, unit, range);
         MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(unit, list, checker);
         #else
+        MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck checker(unit, range);
         MaNGOS::UnitListSearcher<MaNGOS::AnyUnfriendlyUnitInObjectRangeCheck> searcher(list, checker);
         #endif
         Cell::VisitGridObjects(unit, searcher, range);
