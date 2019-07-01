@@ -367,7 +367,11 @@ namespace LuaPlayer
      */
     int UpdateHonor(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        player->GetHonorMgr().Update();
+        #else 
         player->UpdateHonor();
+        #endif
         return 0;
     }
 
@@ -376,7 +380,11 @@ namespace LuaPlayer
      */
     int ResetHonor(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        player->GetHonorMgr().Reset();
+        #else 
         player->ResetHonor();
+        #endif
         return 0;
     }
 
@@ -385,7 +393,11 @@ namespace LuaPlayer
      */
     int ClearHonorInfo(lua_State* L, Player* player)
     {
+        #ifdef VMANGOS
+        player->GetHonorMgr().ClearHonorData(); // TODO: Probably not exactly what we need. Not week-based
+        #else
         player->ClearHonorInfo();
+        #endif
         return 0;
     }
 #endif
