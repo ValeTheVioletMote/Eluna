@@ -474,18 +474,23 @@ namespace LuaGlobalFunctions
         uint8 locale = Eluna::CHECKVAL<uint8>(L, 2, DEFAULT_LOCALE);
         if (locale >= TOTAL_LOCALES)
             return luaL_argerror(L, 2, "valid LocaleConstant expected");
-
 #if defined TRINITY || AZEROTHCORE
         AreaTableEntry const* areaEntry = sAreaTableStore.LookupEntry(areaOrZoneId);
 #elif defined VMANGOS
-        const auto* areaEntry = AreaEntry::GetById(areaOrZoneId);
+        const auto *areaEntry = AreaEntry::GetById(area_id);
 #else
         AreaTableEntry const* areaEntry = GetAreaEntryByAreaID(areaOrZoneId);
 #endif
         if (!areaEntry)
             return luaL_argerror(L, 1, "valid Area or Zone ID expected");
-
+#ifndef VMANGOS
         Eluna::Push(L, areaEntry->area_name[locale]);
+#else
+        std::string areaOrZoneName = "<unknown>";
+        areaOrZoneName = areaEntry->Name;
+        sObjectMgr.GetAreaLocaleString(areaEntry->Id, GetSessionDbLocaleIndex(), &areaOrZoneName);
+        Eluna::Push(L, areaOrZoneName);
+#endif
         return 1;
     }
 
