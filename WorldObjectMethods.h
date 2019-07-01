@@ -1174,7 +1174,7 @@ namespace LuaWorldObject
         if (!sSoundEntriesStore.LookupEntry(soundId))
             return 0;
         #else
-        if(!GetSoundEntry(soundId))
+        if(!sObjectMgr.GetSoundEntry(soundId))
             return 0;
         #endif
 
