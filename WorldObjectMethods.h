@@ -802,10 +802,10 @@ namespace LuaWorldObject
                 break;
 #elif defined VMANGOS
             case 9:
-                type = TEMPSUMMON_TIMED_COMBAT_OR_DEAD_DESPAWN
+                type = TEMPSUMMON_TIMED_COMBAT_OR_DEAD_DESPAWN;
                 break;
             case 10:
-                type = TEMPSUMMON_TIMED_COMBAT_OR_CORPSE_DESPAWN
+                type = TEMPSUMMON_TIMED_COMBAT_OR_CORPSE_DESPAWN;
                 break;
 #endif
             default:
