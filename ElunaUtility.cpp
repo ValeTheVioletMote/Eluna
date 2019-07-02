@@ -55,7 +55,13 @@ ElunaUtil::WorldObjectInRangeCheck::WorldObjectInRangeCheck(bool nearest, WorldO
         if (GameObject const* go = i_obj->ToGameObject())
             i_obj_unit = go->GetOwner();
     if (!i_obj_unit)
+    {
+        #ifdef VMANGOS
+        i_obj_fact = sObjectMgr.GetFactionTemplateEntry(14);
+        #else
         i_obj_fact = sFactionTemplateStore.LookupEntry(14);
+        #endif
+    }
 }
 WorldObject const& ElunaUtil::WorldObjectInRangeCheck::GetFocusObject() const
 {
