@@ -1875,12 +1875,14 @@ namespace LuaGlobalFunctions
             return 0;
         eObjectMgr->AddVendorItem(entry, item, maxcount, incrtime, extendedcost);
 #endif
-#elif defined VMANGOS
+#else
+#ifdef VMANGOS
         if (!eObjectMgr->IsVendorItemValid(false, "npc_vendor", entry, item, maxcount, incrtime))
             return 0;
 #else
         if (!eObjectMgr->IsVendorItemValid(false, "npc_vendor", entry, item, maxcount, incrtime, extendedcost, 0))
             return 0;
+#endif
 #ifndef CLASSIC
         eObjectMgr->AddVendorItem(entry, item, maxcount, incrtime, extendedcost);
 #elif defined VMANGOS
