@@ -2358,7 +2358,7 @@ namespace LuaGlobalFunctions
             #else
             sTaxiNodesStore.SetEntry(nodeId++, nodeEntry);
             #endif
-#ifndef AZEROTHCORE
+#ifndef AZEROTHCORE || VMANGOS
             sTaxiPathNodesByPath[pathId].set(index++, new TaxiPathNodeEntry(entry));
 #else
             sTaxiPathNodesByPath[pathId][index++] = new TaxiPathNodeEntry(entry);
