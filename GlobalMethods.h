@@ -477,7 +477,7 @@ namespace LuaGlobalFunctions
 #if defined TRINITY || AZEROTHCORE
         AreaTableEntry const* areaEntry = sAreaTableStore.LookupEntry(areaOrZoneId);
 #elif defined VMANGOS
-        const auto *areaEntry = AreaEntry::GetById(area_id);
+        const auto *areaEntry = AreaEntry::GetById(areaOrZoneId);
 #else
         AreaTableEntry const* areaEntry = GetAreaEntryByAreaID(areaOrZoneId);
 #endif
