@@ -11,6 +11,10 @@
 #include "GameObject.h"
 #include "DBCStores.h"
 
+#ifdef VMANGOS
+#include "ObjectMgr.h"
+#endif
+
 uint32 ElunaUtil::GetCurrTime()
 {
 #if !defined TRINITY && !AZEROTHCORE
