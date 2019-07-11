@@ -1819,7 +1819,11 @@ namespace LuaPlayer
     {
         uint8 race = Eluna::CHECKVAL<uint8>(L, 2);
 
+        #ifdef VMANGOS
+        player->SetFactionForRace(race);
+        #else
         player->setFactionForRace(race);
+        #endif
         return 0;
     }
 
@@ -1889,7 +1893,11 @@ namespace LuaPlayer
         uint32 faction = Eluna::CHECKVAL<uint32>(L, 2);
         int32 value = Eluna::CHECKVAL<int32>(L, 3);
 
+        #ifdef VMANGOS
+        FactionEntry const* factionEntry = sObjectMgr.GetFactionEntry(faction);
+        #else
         FactionEntry const* factionEntry = sFactionStore.LookupEntry(faction);
+        #endif
         player->GetReputationMgr().SetReputation(factionEntry, value);
         return 0;
     }
@@ -2029,7 +2037,12 @@ namespace LuaPlayer
 
         player->SetByteValue(UNIT_FIELD_BYTES_0, 2, gender);
         player->SetByteValue(PLAYER_BYTES_3, 0, gender);
+        #ifdef VMANGOS
+        player->InitPlayerDisplayIds();
+        #else
         player->InitDisplayIds();
+        #endif
+        
         return 0;
     }
 
@@ -2071,7 +2084,11 @@ namespace LuaPlayer
         uint32 kills = Eluna::CHECKVAL<uint32>(L, 2);
         bool honorable = Eluna::CHECKVAL<bool>(L, 3, true);
 
+        #ifdef VMANGOS
+        player->GetHonorMgr().SetStoredHK(kills, honorable);
+        #else
         player->SetHonorStoredKills(kills, honorable);
+        #endif
         return 0;
     }
 
@@ -2084,7 +2101,11 @@ namespace LuaPlayer
     {
         float rankPoints = Eluna::CHECKVAL<float>(L, 2);
 
+        #ifdef VMANGOS
+        player->GetHonorMgr().SetRankPoints(rankPoints);
+        #else
         player->SetRankPoints(rankPoints);
+        #endif
         return 0;
     }
 
@@ -2097,7 +2118,12 @@ namespace LuaPlayer
     {
         int32 standingPos = Eluna::CHECKVAL<int32>(L, 2);
 
+        #ifdef VMANGOS // Not sure if this is correct, not mentioned explicitly as week-based.
+        player->GetHonorMgr().SetStanding(standingPos);
+        #else
         player->SetHonorLastWeekStandingPos(standingPos);
+        #endif
+
         return 0;
     }
 #endif
@@ -2110,7 +2136,12 @@ namespace LuaPlayer
     int SetLifetimeKills(lua_State* L, Player* player)
     {
         uint32 val = Eluna::CHECKVAL<uint32>(L, 2);
+        #ifdef VMANGOS // Not sure if this is correct.
+        player->GetHonorMgr().SetTotalHK(val);
+        #else
         player->SetUInt32Value(PLAYER_FIELD_LIFETIME_HONORABLE_KILLS, val);
+        #endif
+        
         return 0;
     }
 
@@ -2756,6 +2787,8 @@ namespace LuaPlayer
 #else
 #ifdef TRINITY
         Eluna::Push(L, player->ResetTalentsCost());
+#elif defined VMANGOS
+        Eluna::Push(L, player->GetResetTalentsCost());
 #else
         Eluna::Push(L, player->resetTalentsCost());
 #endif
@@ -2775,7 +2808,7 @@ namespace LuaPlayer
 #ifdef CATA
         player->ResetTalents(no_cost);
 #else
-#ifdef TRINITY
+#ifdef TRINITY || VMANGOS
         player->ResetTalents(no_cost);
 #else
         player->resetTalents(no_cost);
@@ -2800,7 +2833,7 @@ namespace LuaPlayer
         bool disabled = Eluna::CHECKVAL<bool>(L, 3, false);
         bool learn_low_rank = Eluna::CHECKVAL<bool>(L, 4, true);
 
-#ifdef TRINITY
+#ifdef TRINITY || VMANGOS
         player->RemoveSpell(entry, disabled, learn_low_rank);
 #else
         player->removeSpell(entry, disabled, learn_low_rank);
@@ -3006,8 +3039,16 @@ namespace LuaPlayer
             uint32 repValue = quest->GetRepObjectiveValue();
             uint32 curRep = player->GetReputationMgr().GetReputation(repFaction);
             if (curRep < repValue)
+            {
+            #ifdef VMANGOS
+                if (FactionEntry const* factionEntry = sObjectMgr.GetFactionEntry(repFaction))
+            #else
                 if (FactionEntry const* factionEntry = sFactionStore.LookupEntry(repFaction))
+            #endif
+                {
                     player->GetReputationMgr().SetReputation(factionEntry, repValue);
+                }
+            }       
         }
 
 #if defined TRINITY || AZEROTHCORE
