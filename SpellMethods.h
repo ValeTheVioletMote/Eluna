@@ -76,10 +76,8 @@ namespace LuaSpell
      */
     int GetDuration(lua_State* L, Spell* spell)
     {
-#if defined TRINITY || AZEROTHCORE
+#if defined TRINITY || AZEROTHCORE || defined VMANGOS
         Eluna::Push(L, spell->GetSpellInfo()->GetDuration());
-#elif defined VMANGOS
-        Eluna::Push(L, spell->GetDuration());
 #else
         Eluna::Push(L, GetSpellDuration(spell->m_spellInfo));
 #endif
