@@ -951,8 +951,10 @@ ElunaRegister<Item> ItemMethods[] =
     { "IsInBag", &LuaItem::IsInBag },
     { "IsEquipped", &LuaItem::IsEquipped },
     { "HasQuest", &LuaItem::HasQuest },
+#ifndef VMANGOS
     { "IsPotion", &LuaItem::IsPotion },
-#if defined(CLASSIC) || defined(TBC) || defined(WOTLK)
+#endif
+#if (defined(CLASSIC) && !defined(VMANGOS)) || defined(TBC) || defined(WOTLK)
     { "IsWeaponVellum", &LuaItem::IsWeaponVellum },
     { "IsArmorVellum", &LuaItem::IsArmorVellum },
 #endif
@@ -1139,12 +1141,18 @@ ElunaRegister<ElunaQuery> QueryMethods[] =
     { "GetUInt16", &LuaQuery::GetUInt16 },
     { "GetUInt32", &LuaQuery::GetUInt32 },
     { "GetUInt64", &LuaQuery::GetUInt64 },
+#ifndef VMANGOS
     { "GetInt8", &LuaQuery::GetInt8 },
+#endif
     { "GetInt16", &LuaQuery::GetInt16 },
     { "GetInt32", &LuaQuery::GetInt32 },
+#ifndef VMANGOS
     { "GetInt64", &LuaQuery::GetInt64 },
+#endif
     { "GetFloat", &LuaQuery::GetFloat },
+#ifndef VMANGOS
     { "GetDouble", &LuaQuery::GetDouble },
+#endif
     { "GetString", &LuaQuery::GetString },
 
     // Boolean
