@@ -398,7 +398,7 @@ namespace LuaGlobalFunctions
         if (ItemLocale const* il = eObjectMgr->GetItemLocale(entry))
             {
                 #ifdef VMANGOS
-                ObjectMgr::GetAreaLocaleString(entry, locale, &name);
+                ObjectMgr::GetAreaLocaleString(entry, locale, name);
                 #else
                 ObjectMgr::GetLocaleString(il->Name, static_cast<LocaleConstant>(locale), name);
                 #endif
@@ -2364,7 +2364,7 @@ namespace LuaGlobalFunctions
             nodeEntry->MountCreatureID[0] = mountH;
             nodeEntry->MountCreatureID[1] = mountA;
             #ifdef VMANGOS
-            sObjectMgr.SetTaxiNodeEntry(nodeId++, &nodeEntry);
+            sObjectMgr.SetTaxiNodeEntry(nodeId++, nodeEntry);
             #else
             sTaxiNodesStore.SetEntry(nodeId++, nodeEntry);
             #endif
