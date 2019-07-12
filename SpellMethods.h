@@ -78,6 +78,8 @@ namespace LuaSpell
     {
 #if defined TRINITY || AZEROTHCORE
         Eluna::Push(L, spell->GetSpellInfo()->GetDuration());
+#elif defined VMANGOS
+        Eluna::Push(L, spell->GetDuration());
 #else
         Eluna::Push(L, GetSpellDuration(spell->m_spellInfo));
 #endif
