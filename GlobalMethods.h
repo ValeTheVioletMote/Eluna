@@ -2326,7 +2326,11 @@ namespace LuaGlobalFunctions
             sTaxiPathNodesByPath.resize(pathId + 1);
         sTaxiPathNodesByPath[pathId].clear();
         sTaxiPathNodesByPath[pathId].resize(nodes.size());
+        #ifndef VMANGOS
         static uint32 nodeId = 500;
+        #else
+        static uint32 nodeId = sObjectMgr.GetMaxTaxiNodeId();
+        #endif
         uint32 startNode = nodeId;
         uint32 index = 0;
         for (std::list<TaxiPathNodeEntry>::iterator it = nodes.begin(); it != nodes.end(); ++it)
@@ -2356,7 +2360,7 @@ namespace LuaGlobalFunctions
             nodeEntry->MountCreatureID[0] = mountH;
             nodeEntry->MountCreatureID[1] = mountA;
             #ifdef VMANGOS
-            sTaxiPathNodeStore.SetEntry(nodeId++, nodeEntry);
+            sObjectMgr.SetTaxiNodeEntry(nodeId++, *nodeEntry);
             #else
             sTaxiNodesStore.SetEntry(nodeId++, nodeEntry);
             #endif
@@ -2375,7 +2379,11 @@ namespace LuaGlobalFunctions
         pathEntry->to = nodeId - 1;
         pathEntry->ID = pathId;
         pathEntry->price = price;
+        #ifdef VMANGOS
+        sTaxiPathStore.InsertEntry(pathId, pathEntry);
+        #else
         sTaxiPathStore.SetEntry(pathId, pathEntry);
+        #endif
         Eluna::Push(L, pathId);
         return 1;
     }
