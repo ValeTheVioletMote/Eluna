@@ -268,7 +268,14 @@ namespace LuaItem
         const ItemTemplate* temp = item->GetTemplate();
         std::string name = temp->Name1;
         if (ItemLocale const* il = eObjectMgr->GetItemLocale(temp->ItemId))
+        {
+            #ifdef VMANGOS
+            sObjectMgr.GetAreaLocaleString(item->GetEntry(), locale, &name);
+            #else
             ObjectMgr::GetLocaleString(il->Name, static_cast<LocaleConstant>(locale), name);
+            #endif
+        }
+            
 
 #ifndef CLASSIC
         if (int32 itemRandPropId = item->GetItemRandomPropertyId())
