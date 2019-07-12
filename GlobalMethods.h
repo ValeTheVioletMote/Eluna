@@ -2336,7 +2336,11 @@ namespace LuaGlobalFunctions
         for (std::list<TaxiPathNodeEntry>::iterator it = nodes.begin(); it != nodes.end(); ++it)
         {
             TaxiPathNodeEntry& entry = *it;
+            #ifdef VMANGOS
+            std::unique_ptr<TaxiNodesEntry> nodeEntry = std::make_unique<TaxiNodesEntry>();
+            #else
             TaxiNodesEntry* nodeEntry = new TaxiNodesEntry();
+            #endif
 #ifdef TRINITY
             entry.PathID = pathId;
             entry.NodeIndex = nodeId;
@@ -2360,7 +2364,7 @@ namespace LuaGlobalFunctions
             nodeEntry->MountCreatureID[0] = mountH;
             nodeEntry->MountCreatureID[1] = mountA;
             #ifdef VMANGOS
-            sObjectMgr.SetTaxiNodeEntry(nodeId++, *nodeEntry);
+            sObjectMgr.SetTaxiNodeEntry(nodeId++, &nodeEntry);
             #else
             sTaxiNodesStore.SetEntry(nodeId++, nodeEntry);
             #endif
