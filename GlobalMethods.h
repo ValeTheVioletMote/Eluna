@@ -398,7 +398,7 @@ namespace LuaGlobalFunctions
         if (ItemLocale const* il = eObjectMgr->GetItemLocale(entry))
             {
                 #ifdef VMANGOS
-                ObjectMgr::GetAreaLocaleString(entry, locale, *name);
+                ObjectMgr::GetAreaLocaleString(entry, locale, &name);
                 #else
                 ObjectMgr::GetLocaleString(il->Name, static_cast<LocaleConstant>(locale), name);
                 #endif
@@ -488,7 +488,7 @@ namespace LuaGlobalFunctions
 #else
         std::string areaOrZoneName = "<unknown>";
         areaOrZoneName = areaEntry->Name;
-        sObjectMgr.GetAreaLocaleString(areaEntry->Id, GetSessionDbLocaleIndex(), &areaOrZoneName);
+        sObjectMgr.GetAreaLocaleString(areaEntry->Id, locale, &areaOrZoneName);
         Eluna::Push(L, areaOrZoneName);
 #endif
         return 1;
