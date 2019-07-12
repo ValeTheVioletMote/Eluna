@@ -197,7 +197,7 @@ namespace LuaItem
     }
 #endif
 
-#if defined CLASSIC || defined(TBC) || defined(WOTLK)
+#if (defined CLASSIC && !defined VMANGOS) || defined(TBC) || defined(WOTLK)
     /**
      * Returns 'true' if the [Item] is a weapon vellum, 'false' otherwise
      *
