@@ -148,6 +148,7 @@ namespace LuaQuery
         return 1;
     }
 
+#ifndef VMANGOS // VMANGOS doesn't have these in their DB. So no point in having these in Eluna (for now).
     /**
      * Returns the data in the specified column of the current row, casted to a signed 8-bit integer.
      *
@@ -161,6 +162,7 @@ namespace LuaQuery
         Eluna::Push(L, RESULT->Fetch()[col].GetInt8());
         return 1;
     }
+#endif
 
     /**
      * Returns the data in the specified column of the current row, casted to a signed 16-bit integer.
@@ -190,6 +192,7 @@ namespace LuaQuery
         return 1;
     }
 
+#ifndef VMANGOS // VMANGOS doesn't have these in their DB. So no point in having these in Eluna (for now).
     /**
      * Returns the data in the specified column of the current row, casted to a signed 64-bit integer.
      *
@@ -203,6 +206,7 @@ namespace LuaQuery
         Eluna::Push(L, RESULT->Fetch()[col].GetInt64());
         return 1;
     }
+#endif
 
     /**
      * Returns the data in the specified column of the current row, casted to a 32-bit floating point value.
@@ -218,6 +222,7 @@ namespace LuaQuery
         return 1;
     }
 
+#ifndef VMANGOS // VMANGOS doesn't have these in their DB. So no point in having these in Eluna (for now).
     /**
      * Returns the data in the specified column of the current row, casted to a 64-bit floating point value.
      *
@@ -231,6 +236,7 @@ namespace LuaQuery
         Eluna::Push(L, RESULT->Fetch()[col].GetDouble());
         return 1;
     }
+#endif
 
     /**
      * Returns the data in the specified column of the current row, casted to a string.
