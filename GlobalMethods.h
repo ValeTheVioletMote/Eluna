@@ -398,9 +398,7 @@ namespace LuaGlobalFunctions
         if (ItemLocale const* il = eObjectMgr->GetItemLocale(entry))
             {
                 #ifdef VMANGOS
-                std::string *nameptr;
-                *nameptr = &name;
-                ObjectMgr::GetAreaLocaleString(entry, locale, nameptr);
+                ObjectMgr::GetAreaLocaleString(entry, locale, &name);
                 #else
                 ObjectMgr::GetLocaleString(il->Name, static_cast<LocaleConstant>(locale), name);
                 #endif
