@@ -184,6 +184,7 @@ namespace LuaItem
         return 1;
     }
 
+#ifndef VMANGOS
     /**
      * Returns 'true' if the [Item] is a potion, 'false' otherwise
      *
@@ -194,6 +195,7 @@ namespace LuaItem
         Eluna::Push(L, item->IsPotion());
         return 1;
     }
+#endif
 
 #if defined CLASSIC || defined(TBC) || defined(WOTLK)
     /**
