@@ -2093,7 +2093,15 @@ namespace LuaPlayer
         bool honorable = Eluna::CHECKVAL<bool>(L, 3, true);
 
         #ifdef VMANGOS
-        player->GetHonorMgr().SetStoredHK(kills, honorable);
+        if(honorable)
+        {
+            player->GetHonorMgr().SetStoredHK(kills);
+        }
+        else
+        {
+            player->GetHonorMgr().SetStoredDK(kills);
+        }
+        
         #else
         player->SetHonorStoredKills(kills, honorable);
         #endif
