@@ -655,7 +655,7 @@ namespace LuaCreature
         float z = Eluna::CHECKVAL<float>(L, 4);
         float o = Eluna::CHECKVAL<float>(L, 5);
 
-#if defined TRINITY || AZEROTHCORE
+#if defined TRINITY || AZEROTHCORE || defined VMANGOS
         creature->SetHomePosition(x, y, z, o);
 #else
         creature->SetRespawnCoord(x, y, z, o);
