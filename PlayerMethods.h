@@ -331,7 +331,7 @@ namespace LuaPlayer
     int GetHonorLastWeekStandingPos(lua_State* L, Player* player)
     {
         #ifdef VMANGOS
-        Eluna::Push(L, player->GetHonorMgr().GetStanding(); // TODO: Probably not exactly what we need. Not week-based(?)
+        Eluna::Push(L, player->GetHonorMgr().GetStanding()); // TODO: Probably not exactly what we need. Not week-based(?)
         #else
         Eluna::Push(L, player->GetHonorLastWeekStandingPos());
         #endif
