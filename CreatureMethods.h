@@ -710,7 +710,7 @@ namespace LuaCreature
 #ifdef CMANGOS
         ThreatList const& threatlist = creature->getThreatManager().getThreatList();
 #endif
-#ifdef MANGOS
+#if defined MANGOS || defined VMANGOS
         ThreatList const& threatlist = creature->GetThreatManager().getThreatList();
 #endif
 #ifdef TRINITY
@@ -805,6 +805,8 @@ namespace LuaCreature
         auto const& threatlist = creature->GetThreatManager().GetThreatenedByMeList();
 #elif defined AZEROTHCORE
 auto const& threatlist = creature->getThreatManager().getThreatList();
+#elif defined VMANGOS
+        ThreatList const& threatlist = creature->getThreatManager().GetThreatList();
 #else
         ThreatList const& threatlist = creature->GetThreatManager().getThreatList();
 #endif
@@ -839,6 +841,8 @@ auto const& threatlist = creature->getThreatManager().getThreatList();
         Eluna::Push(L, creature->GetThreatManager().GetThreatenedByMeList().size());
 #elif AZEROTHCORE
         Eluna::Push(L, creature->getThreatManager().getThreatList().size());
+#elif defined VMANGOS
+        Eluna::Push(L, creature->getThreatManager().GetThreatList().size());
 #else
         Eluna::Push(L, creature->GetThreatManager().getThreatList().size());
 #endif
@@ -1381,7 +1385,13 @@ auto const& threatlist = creature->getThreatManager().getThreatList();
 #else
         CreatureInfo const* cInfo = ObjectMgr::GetCreatureTemplate(entry);
         if (cInfo)
+        {
+#ifdef VMANGOS
+            Eluna::Push(L, cInfo->beast_family);
+#else            
             Eluna::Push(L, cInfo->Family);
+#endif
+        }
 #endif
         return 1;
     }
