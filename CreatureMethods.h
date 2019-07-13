@@ -271,6 +271,11 @@ namespace LuaCreature
             Eluna::Push(L, info->GetCategory() && creature->HasSpellCooldown(spell));
         else
             Eluna::Push(L, false);
+#elif defined VMANGOS
+        if(const SpellEntry* sp_info = sSpellMgr.GetSpellEntry(spell))
+        {
+            Eluna::Push(L, creature->HasSpellCategoryCooldown(sp_info.Category));
+        }
 #else
         Eluna::Push(L, creature->HasCategoryCooldown(spell));
 #endif
