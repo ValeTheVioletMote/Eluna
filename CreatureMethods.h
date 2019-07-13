@@ -712,7 +712,7 @@ namespace LuaCreature
         float dist = Eluna::CHECKVAL<float>(L, 5, 0.0f);
         int32 aura = Eluna::CHECKVAL<int32>(L, 6, 0);
 
-#ifdef CMANGOS || defined VMANGOS
+#if defined CMANGOS || defined VMANGOS
         ThreatList const& threatlist = creature->getThreatManager().getThreatList();
 #endif
 #if defined MANGOS
