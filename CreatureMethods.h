@@ -714,14 +714,11 @@ namespace LuaCreature
 
 #if defined CMANGOS || defined VMANGOS
         ThreatList const& threatlist = creature->getThreatManager().getThreatList();
-#endif
-#if defined MANGOS
+#elif defined MANGOS
         ThreatList const& threatlist = creature->GetThreatManager().getThreatList();
-#endif
-#ifdef TRINITY
+#elif defined TRINITY
         auto const& threatlist = creature->GetThreatManager().GetThreatenedByMeList();
-#endif
-#ifdef AZEROTHCORE
+#elif AZEROTHCORE
         auto const& threatlist = creature->getThreatManager().getThreatList();
 #endif
 
