@@ -3865,7 +3865,7 @@ namespace LuaPlayer
         player->SendTalentsInfoData(false);
 #endif
 
-#if !defined TRINITY && !AZEROTHCORE
+#if !defined TRINITY && !AZEROTHCORE && !defined VMANGOS
         // if player has a pet, update owner talent auras
         if (player->GetPet())
             player->GetPet()->CastOwnerTalentAuras();
