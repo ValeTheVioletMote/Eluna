@@ -2824,7 +2824,7 @@ namespace LuaPlayer
 #ifdef CATA
         player->ResetTalents(no_cost);
 #else
-#ifdef TRINITY || VMANGOS
+#if defined TRINITY || defined VMANGOS
         player->ResetTalents(no_cost);
 #else
         player->resetTalents(no_cost);
