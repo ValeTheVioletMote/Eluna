@@ -1358,7 +1358,11 @@ namespace LuaPlayer
         #ifdef VMANGOS
 
         Quest const* qInfo = sObjectMgr.GetQuestTemplate(questId);
+        #ifdef VMANGOS
+        QuestStatusData const* q_status = player->GetQuestStatusData(questId);        
+        #else
         QuestStatusData& q_status = player->GetQuestStatusData(questId);
+        #endif
 
         if (qInfo->HasSpecialFlag(QUEST_SPECIAL_FLAG_KILL_OR_CAST))
         {
@@ -1368,7 +1372,11 @@ namespace LuaPlayer
                 if (qInfo->ReqCreatureOrGOId[j] == entry || qInfo->ReqSpell[j] == entry)
                 {
                     found=true;
+                    #ifdef VMANGOS
+                    Eluna::Push(L, q_status->m_creatureOrGOcount[j]);                    
+                    #else
                     Eluna::Push(L, q_status.m_creatureOrGOcount[j]);
+                    #endif
                 }
             }
             if(!found)
