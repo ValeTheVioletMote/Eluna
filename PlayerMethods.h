@@ -4088,7 +4088,11 @@ namespace LuaPlayer
     int RemovedInsignia(lua_State* L, Player* player)
     {
         Player* looter = Eluna::CHECKOBJ<Player>(L, 2);
+        #ifdef VMANGOS
+        player->RemovedInsignia(looter, player->GetCorpse());
+        #else
         player->RemovedInsignia(looter);
+        #endif
         return 0;
     }
 
