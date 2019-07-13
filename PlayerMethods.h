@@ -2849,7 +2849,7 @@ namespace LuaPlayer
         bool disabled = Eluna::CHECKVAL<bool>(L, 3, false);
         bool learn_low_rank = Eluna::CHECKVAL<bool>(L, 4, true);
 
-#ifdef TRINITY || VMANGOS
+#if defined TRINITY || defined VMANGOS
         player->RemoveSpell(entry, disabled, learn_low_rank);
 #else
         player->removeSpell(entry, disabled, learn_low_rank);
@@ -3175,6 +3175,10 @@ namespace LuaPlayer
         if (!quest)
             return 0;
 
+#ifdef VMANGOS
+        player->RemoveQuest(entry);
+#else
+
         // remove all quest entries for 'entry' from quest log
         for (uint8 slot = 0; slot < MAX_QUEST_LOG_SIZE; ++slot)
         {
@@ -3205,6 +3209,7 @@ namespace LuaPlayer
 
         // reset rewarded for restart repeatable quest
         player->getQuestStatusMap()[entry].m_rewarded = false;
+#endif
 #endif
         return 0;
     }
