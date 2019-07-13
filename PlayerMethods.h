@@ -3839,7 +3839,7 @@ namespace LuaPlayer
     {
         uint32 id = Eluna::CHECKVAL<uint32>(L, 2);
 
-#ifdef TRINITY
+#if defined TRINITY || defined VMANGOS
         player->LearnSpell(id, false);
 #elif AZEROTHCORE
         player->learnSpell(id);
