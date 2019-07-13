@@ -602,6 +602,8 @@ namespace LuaCreature
             Eluna::Push(L, creature->GetSpellCooldown(spell));
         else
             Eluna::Push(L, 0);
+#elif defined VMANGOS
+        Eluna::Push(L, creature->GetSpellCooldownDelay(spell));
 #else
         Eluna::Push(L, creature->GetCreatureSpellCooldownDelay(spell));
 #endif
