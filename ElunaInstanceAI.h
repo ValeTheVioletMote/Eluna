@@ -79,6 +79,8 @@ public:
         return Save();
     }
     const char* Save() const;
+#elif defined VMANGOS
+    const char* Save() override;
 #else
     const char* Save() const override;
 #endif
@@ -98,10 +100,18 @@ public:
     /*
      * These methods allow non-Lua scripts (e.g. DB, C++) to get/set instance data.
      */
+#ifndef VMANGOS
     uint32 GetData(uint32 key) const override;
+#else
+    uint32 GetData(uint32 key) override;
+#endif
     void SetData(uint32 key, uint32 value) override;
 
+#ifndef VMANGOS
     uint64 GetData64(uint32 key) const override;
+#else
+    uint64 GetData64(uint32 key) override;
+#endif
     void SetData64(uint32 key, uint64 value) override;
 
     /*

@@ -141,8 +141,11 @@ const char* ElunaInstanceAI::Save() const
 
     return lastSaveData.c_str();
 }
-
+#ifndef VMANGOS
 uint32 ElunaInstanceAI::GetData(uint32 key) const
+#else
+uint32 ElunaInstanceAI::GetData(uint32 key)
+#endif
 {
     LOCK_ELUNA;
     lua_State* L = sEluna->L;
@@ -183,8 +186,11 @@ void ElunaInstanceAI::SetData(uint32 key, uint32 value)
     lua_pop(L, 1);
     // Stack: (empty)
 }
-
+#ifndef VMANGOS
 uint64 ElunaInstanceAI::GetData64(uint32 key) const
+#else
+uint64 ElunaInstanceAI::GetData64(uint32 key)
+#endif
 {
     LOCK_ELUNA;
     lua_State* L = sEluna->L;
