@@ -3552,7 +3552,11 @@ namespace LuaPlayer
         if (player->IsTaxiFlying())
         {
             player->GetMotionMaster()->MovementExpired();
+#ifdef VMANGOS
+            player->ClearTaxiDestinations();
+#else
             player->m_taxi.ClearTaxiDestinations();
+#endif
         }
 #endif
         Eluna::Push(L, player->TeleportTo(mapId, x, y, z, o));
