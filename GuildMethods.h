@@ -297,7 +297,7 @@ namespace LuaGuild
         SQLTransaction trans(nullptr);
         guild->ChangeMemberRank(trans, player->GET_GUID(), newRank);
 #elif defined VMANGOS
-        guild->GetMemberSlot(player->GET_GUID())->ChangeRank(newRank)
+        guild->GetMemberSlot(player->GET_GUID())->ChangeRank(newRank);
 #else
         guild->ChangeMemberRank(player->GET_GUID(), newRank);
 #endif
