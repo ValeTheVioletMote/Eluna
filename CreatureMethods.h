@@ -808,7 +808,7 @@ namespace LuaCreature
 #elif defined AZEROTHCORE
 auto const& threatlist = creature->getThreatManager().getThreatList();
 #elif defined VMANGOS
-        ThreatList const& threatlist = creature->getThreatManager().GetThreatList();
+        ThreatList const& threatlist = creature->getThreatManager().getThreatList();
 #else
         ThreatList const& threatlist = creature->GetThreatManager().getThreatList();
 #endif
@@ -841,10 +841,8 @@ auto const& threatlist = creature->getThreatManager().getThreatList();
     {
 #ifdef TRINITY
         Eluna::Push(L, creature->GetThreatManager().GetThreatenedByMeList().size());
-#elif AZEROTHCORE
+#elif AZEROTHCORE || defined VMANGOS
         Eluna::Push(L, creature->getThreatManager().getThreatList().size());
-#elif defined VMANGOS
-        Eluna::Push(L, creature->getThreatManager().GetThreatList().size());
 #else
         Eluna::Push(L, creature->GetThreatManager().getThreatList().size());
 #endif
