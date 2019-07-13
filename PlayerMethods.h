@@ -3553,7 +3553,7 @@ namespace LuaPlayer
         {
             player->GetMotionMaster()->MovementExpired();
 #ifdef VMANGOS
-            player->ClearTaxiDestinations();
+            player->GetTaxi().ClearTaxiDestinations();
 #else
             player->m_taxi.ClearTaxiDestinations();
 #endif
