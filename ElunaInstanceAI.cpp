@@ -103,8 +103,11 @@ void ElunaInstanceAI::Load(const char* data)
         Initialize();
     }
 }
-
+#ifndef VMANGOS
 const char* ElunaInstanceAI::Save() const
+#else
+const char* ElunaInstanceAI::Save()
+#endif
 {
     LOCK_ELUNA;
     lua_State* L = sEluna->L;
