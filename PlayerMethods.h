@@ -684,7 +684,7 @@ namespace LuaPlayer
     int IsAcceptingWhispers(lua_State* L, Player* player)
     {
         #ifdef VMANGOS
-        Eluna::Push(L, player->isAcceptWhispers());
+        Eluna::Push(L, player->IsAcceptWhispers());
         #else
         Eluna::Push(L, player->isAcceptWhispers());
         #endif
